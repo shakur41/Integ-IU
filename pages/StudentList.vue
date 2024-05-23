@@ -15,6 +15,7 @@
         <template slot="item.actions" slot-scope="{}">
           <v-btn color="#B80000"> DELETE</v-btn>
           <v-btn color="#0079FF"> EDIT</v-btn>
+          <v-btn color="#008000 "> SAVE</v-btn>
         </template>
       </v-data-table>
     </v-card>
@@ -30,21 +31,45 @@
             text: "StudentID",
             align: "start",
             sortable: false,
-            value: "StudentID",
+            value: "attributes.student_no",
           },
-          { text: "FirtsName", value: "Firts_Name" },
-          { text: "LastName", value: "Last_Name" },
-          { text: "MiddleName", value: "Middle_Name" },
-          { text: "Course", value: "Course" },
-          { text: "Year", value: "Year" },
-          { text: "Section", value: "Section" },
+          { text: "FirtsName", value: "attributes.first_name" },
+          { text: "LastName", value: "attributes.last_name" },
+          { text: "MiddleName", value: "attributes.middle_name" },
+          { text: "Course", value: "attributes.course" },
+          { text: "Year", value: "attributes.year" },
+          { text: "Section", value: "attributes.section" },
           { text: "", value: "actions" },
         ],
         StudentData: [
-          ,
+
+          
         ],
       };
     },
+
+    //allfunctions
+    methods: {
+      getStudentList(){
+          this.$axios.get("http://localhost:1337/api/student-lists")
+          .then(response => {
+            console.log ("Success");
+            console.log(response.data.data)
+            this.StudentData = response.data.data
+
+          })
+          .catch(error =>{
+            console.log("Error");
+         
+          })
+      }
+    },
+
+    mounted(){
+      
+      this.getStudentList();
+    }
+
   };
   </script>
   
